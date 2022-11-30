@@ -48,14 +48,18 @@ void testcases(void)
     printf("0) wait test\r\n");
     printf("1) getc test\r\n");
     printf("2) putc test\r\n");
+    printf("3) wait test with signal\r\n");
+    printf("4) semfree test\r\n");
     
 	// TODO: Test your operating system!
     c = getc();
     switch (c)
     {
     case '0':
+        testsem = semcreate(0);
         printf("test 0\r\n");
         testSemWait(testsem);
+        print_sem(testsem);
         break;
     case '1':
         printf("test 1\r\n");
@@ -68,7 +72,23 @@ void testcases(void)
         printf("putting 'A'\r\n");
         putc('A');
         printf("\r\n");
-        
+        break;
+    case '3':
+        testsem = semcreate(0);
+        signal(testsem);
+        printf("test 3\r\n");
+        print_sem(testsem);
+        testSemWait(testsem);
+        print_sem(testsem);
+        semfree(testsem);
+        break;
+    case '4':
+        printf("test4\r\n");
+        testsem = semcreate(0);
+        print_sem(testsem);
+        printf("freeing semaphore\r\n");
+        semfree(testsem);
+        print_sem(testsem);
         break;
     default:
         break;
